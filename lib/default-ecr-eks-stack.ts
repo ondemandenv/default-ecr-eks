@@ -22,7 +22,7 @@ export class DefaultEcrEksStack extends cdk.Stack {
                 const cfnRef = m.userEnver.getSharedValue(this, csmr.producer)
 
                 // @ts-ignore
-                c.image = cfnRef
+                c.image = `${csmr.owner.targetAWSAccountID}.dkr.ecr.${csmr.owner.targetAWSRegion}.amazonaws.com/${cfnRef}:latest`
             }
         })
 
