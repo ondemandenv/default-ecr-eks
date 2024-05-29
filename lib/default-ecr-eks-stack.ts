@@ -25,7 +25,7 @@ export class DefaultEcrEksStack extends cdk.Stack {
         }
 
 
-        new EksManifest(this, 'd-i-s', {
+        new EksManifest(this, 'eks-manifest', {
             manifest: chart,
             enver: m,
             k8sNamespace: m.simpleK8s.targetNamespace,
