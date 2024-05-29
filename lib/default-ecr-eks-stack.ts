@@ -1,7 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import {Construct} from 'constructs';
 import {
-    ContractsCrossRefConsumer,
     ContractsEnverCdk, ContractsEnverCdkDefaultEcrEks, EksManifest
 } from "@ondemandenv/odmd-contracts";
 import {Deployment, Ingress, Service} from "cdk8s-plus-28";
@@ -15,16 +14,6 @@ export class DefaultEcrEksStack extends cdk.Stack {
         super(scope, ContractsEnverCdk.SANITIZE_STACK_NAME(`${m.owner.buildId}--${revStr}`), props);
 
         const chart = new Chart(new App(), 'theChart')
-
-        m.simpleK8s.deployment.containers?.forEach(c => {
-            if (c.image.startsWith('OdmdRefConsumer:')) {
-                const csmr = ContractsCrossRefConsumer.fromOdmdRef(c.image)
-                const cfnRef = m.userEnver.getSharedValue(this, csmr.producer)
-
-                // @ts-ignore
-                c.image = `${csmr.owner.targetAWSAccountID}.dkr.ecr.${csmr.owner.targetAWSRegion}.amazonaws.com/${cfnRef}:latest`
-            }
-        })
 
         new Deployment(chart, 'deploy', m.simpleK8s.deployment)
 
@@ -40,10 +29,7 @@ export class DefaultEcrEksStack extends cdk.Stack {
             manifest: chart,
             enver: m,
             k8sNamespace: m.simpleK8s.targetNamespace,
-            targetEksCluster: m.simpleK8s.targetEksCluster,
-            skipValidate: false,
-            overWrite: false,
-            pruneLabels: 'a=b',
+            targetEksCluster: m.simpleK8s.targetEksCluster
         });
 
     }
