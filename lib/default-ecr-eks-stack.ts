@@ -29,7 +29,10 @@ export class DefaultEcrEksStack extends cdk.Stack {
             manifest: chart,
             enver: m,
             k8sNamespace: m.simpleK8s.targetNamespace,
-            targetEksCluster: m.simpleK8s.targetEksCluster
+            targetEksCluster: m.simpleK8s.targetEksCluster,
+            skipValidate: true,
+            pruneLabels: 'a=b',
+            overWrite: true
         });
 
     }
