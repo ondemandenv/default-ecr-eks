@@ -8,7 +8,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk-ls": "tsc --build --clean && tsc --build && cross-env target_rev_ref=b:odmdSbxUsw1 cdk ls --profile AdministratorAccess-590184130740 -vv"
+    "cdk-ls": "tsc --build --clean && tsc --build && cross-env target_rev_ref=b:?? cdk ls --profile AdministratorAccess-590184130740 -vv"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
@@ -19,7 +19,7 @@
     "aws-cdk": "2.142.1",
     "ts-node": "^10.9.2",
     "typescript": "~5.4.5",
-    "@ondemandenv/odmd-contracts": "0.1.88-r",
+    "@ondemandenv/odmd-contracts": "0.1.87-c",
     "cdk8s": "^2.68.71",
     "cdk8s-plus-28": "^2.3.4"
   },

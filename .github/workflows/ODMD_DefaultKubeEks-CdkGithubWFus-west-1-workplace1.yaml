@@ -1,6 +1,6 @@
 #ODMD GENERATED WORKFLOW, don't change unless you are sure
 
-name: ODMD_DefaultKubeEks-CdkGithubWFus-west-1-975050243618
+name: ODMD_DefaultKubeEks-CdkGithubWFus-west-1-workplace1
 on:
   workflow_dispatch:
     inputs:
@@ -31,6 +31,6 @@ jobs:
           ODMD_workDirs: .
           ODMD_buildType: CdkGithubWF
           ODMD_awsRegion: us-west-1
-          ODMD_AWS_CREDENTIALS: ${{ secrets['ODMD_AWS_CREDENTIALS_ODMD_DefaultKubeEks_CdkGithubWFus_west_1_975050243618'] }}
+          ODMD_AWS_CREDENTIALS: ${{ secrets['ODMD_AWS_CREDENTIALS_ODMD_DefaultKubeEks_CdkGithubWFus_west_1_workplace1'] }}
 
-#3
+#
