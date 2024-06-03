@@ -24,7 +24,12 @@ const props = {
     }
 } as StackProps;
 
-const tmp = OndemandContracts.inst.defaultEcrEks.envers[0]
+const allMyEnvers = OndemandContracts.inst.defaultEcrEks.envers
 
+const m = allMyEnvers.find(e => e.targetRevision.toString() == OndemandContracts.REV_REF_value)!;
 
-new DefaultEcrEksStack(app, tmp, props);
+if (!m) {
+    throw new Error('no enver found!')
+}
+
+new DefaultEcrEksStack(app, m, props);
