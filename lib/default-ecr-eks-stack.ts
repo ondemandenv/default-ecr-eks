@@ -1,13 +1,13 @@
 import * as cdk from 'aws-cdk-lib';
 import {Construct} from 'constructs';
+import {Deployment, Ingress, Service} from "cdk8s-plus-29";
+import {App, Chart} from "cdk8s";
 import {
     ContractsCrossRefConsumer,
     ContractsEnverCdk,
     ContractsEnverCdkDefaultEcrEks,
     EksManifest
 } from "@ondemandenv/odmd-contracts";
-import {Deployment, Ingress, Service} from "cdk8s-plus-28";
-import {App, Chart} from "cdk8s";
 
 
 export class DefaultEcrEksStack extends cdk.Stack {
@@ -18,23 +18,23 @@ export class DefaultEcrEksStack extends cdk.Stack {
 
         const chart = new Chart(new App(), 'theChart')
 
-        this.implementConsumerRef(m.simpleK8s.deployment)
-        new Deployment(chart, 'deploy', m.simpleK8s.deployment)
+        this.implementConsumerRef(m.deployment)
+        new Deployment(chart, 'deploy', m.deployment)
 
-        if (m.simpleK8s.ingress) {
-            this.implementConsumerRef(m.simpleK8s.ingress)
-            new Ingress(chart, 'ingress', m.simpleK8s.ingress)
+        if (m.ingress) {
+            this.implementConsumerRef(m.ingress)
+            new Ingress(chart, 'ingress', m.ingress)
         }
-        if (m.simpleK8s.service) {
-            this.implementConsumerRef(m.simpleK8s.service)
-            new Service(chart, 'service', m.simpleK8s.service)
+        if (m.service) {
+            this.implementConsumerRef(m.service)
+            new Service(chart, 'service', m.service)
         }
 
         new EksManifest(this, 'eks-manifest', {
             manifest: chart,
             enver: m,
-            k8sNamespace: m.simpleK8s.targetNamespace,
-            targetEksCluster: m.simpleK8s.targetEksCluster,
+            k8sNamespace: m.targetNamespace,
+            targetEksCluster: m.targetEksCluster,
             skipValidate: true,
             pruneLabels: 'a=b',
             overWrite: true
@@ -48,7 +48,7 @@ export class DefaultEcrEksStack extends cdk.Stack {
                 const val = obj[prop]
                 if (typeof val == 'string' && val.startsWith(ContractsCrossRefConsumer.OdmdRef_prefix)) {
                     obj[prop] = ContractsCrossRefConsumer.fromOdmdRef(val).getSharedValue(this)
-                    console.log( val + ' >> ' + obj[prop])
+                    console.log(val + ' >> ' + obj[prop])
                 } else if (typeof obj[prop] === 'object' && obj[prop] !== null) {
                     this.implementConsumerRef(obj[prop]);
                 }
