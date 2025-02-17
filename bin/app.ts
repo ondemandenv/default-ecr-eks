@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import {ContractsEnverCdkDefaultEcrEks, OndemandContracts} from "@ondemandenv/odmd-contracts";
 import {StackProps} from "aws-cdk-lib";
 import {DefaultEcrEksStack} from "../lib/default-ecr-eks-stack";
+import {OndemandContractsSandbox} from "@ondemandenv/odmd-contracts-sandbox";
+import {OdmdEnverCdkDefaultEcrEks} from "@ondemandenv/contracts-lib-base";
 
 const app = new cdk.App();
 
@@ -23,10 +24,10 @@ async function main() {
         }
     } as StackProps;
 
-    new OndemandContracts(app)
+    new OndemandContractsSandbox(app)
 
 
-    const targetEnver = OndemandContracts.inst.getTargetEnver() as ContractsEnverCdkDefaultEcrEks
+    const targetEnver = OndemandContractsSandbox.inst.getTargetEnver() as OdmdEnverCdkDefaultEcrEks
 
     new DefaultEcrEksStack(app, targetEnver, props);
 }
